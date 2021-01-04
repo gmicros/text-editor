@@ -29,10 +29,10 @@ int main() {
 	debug_win = newwin(height, width, starty, startx);
 	box(debug_win, 0, 0);
 	wrefresh(debug_win);
-	
-	printw("Text editor:\n");
-	refresh();
-	
+	refresh();	
+
+	print_debug("WELCOME");	
+
 	// quit the TE with the Esc key	
 	while ((ch = getch()) != 27) {
 		switch(ch)
@@ -63,7 +63,7 @@ int main() {
 		// update display and get next char
 		refresh();
 	}
-	
+	print_debug("EXITING");	
 	endwin();
 	
 	return 0;
