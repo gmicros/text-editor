@@ -12,6 +12,7 @@ int main() {
 	noecho();		// dont echo while we getch
 
 	printw("Text editor:\n");
+	refresh();
 	
 	ch = getch();	
 	// quit the TE with the Esc key	
@@ -19,6 +20,11 @@ int main() {
 		// just print alphanumeric
 		if (ch >= ' ' && ch <= '~') {
 			printw("%c", ch); 
+		}
+		
+		// newline
+		if (ch == 10) {
+			printw("\n");
 		}
 
 		// update display and get next char
