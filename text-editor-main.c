@@ -27,6 +27,13 @@ int main() {
 			printw("\n");
 		}
 
+		// backspace
+		if (ch == 127) {
+			int y, x;
+			getyx(stdscr, y, x);
+			mvdelch(y, x-1);
+		}
+
 		// update display and get next char
 		refresh();
 		ch = getch();
