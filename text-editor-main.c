@@ -14,33 +14,34 @@ int main() {
 	printw("Text editor:\n");
 	refresh();
 	
-	ch = getch();	
 	// quit the TE with the Esc key	
-	while (ch != 27) {
-		// just print alphanumeric
-		if (ch >= ' ' && ch <= '~') {
-			printw("%c", ch); 
-		}
-		
-		// newline
-		if (ch == 10) {
-			printw("\n");
-		}
+	while ((ch = getch()) != 27) {
+		switch(ch)
+		{
+			// BACKSPACE
+			case 127: {
+				int y, x;
+				getyx(stdscr,y,x);
+				mvdelch(y,x-1);
 
-		// backspace
-		if (ch == 127) {
-			int y, x;
-			getyx(stdscr, y, x);
-			mvdelch(y, x-1);
+				// TODO(gmicros): handle deleting a line
+				break;
+			}
+			// ENTER
+			case 10:
+				printw("\n");
+				break;
+			// REGULAR CHARACTER
+			default:
+				printw("%c", ch);
+	
 		}
 
 		// update display and get next char
 		refresh();
-		ch = getch();
 	}
 	
 	endwin();
 	
 	return 0;
-	
 }
