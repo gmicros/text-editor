@@ -12,14 +12,18 @@ int main() {
 	noecho();		// dont echo while we getch
 
 	printw("Text editor:\n");
-		
-	while (ch = getch()) {
-		if (ch == 27) {
-			break;
+	
+	ch = getch();	
+	// quit the TE with the Esc key	
+	while (ch != 27) {
+		// just print alphanumeric
+		if (ch >= ' ' && ch <= '~') {
+			printw("%c", ch); 
 		}
-		printw("%c", ch); 
 
+		// update display and get next char
 		refresh();
+		ch = getch();
 	}
 	
 	endwin();
