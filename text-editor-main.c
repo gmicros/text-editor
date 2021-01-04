@@ -35,13 +35,16 @@ int main() {
 
 	// quit the TE with the Esc key	
 	while ((ch = getch()) != 27) {
+		int y, x;
+		getyx(stdscr, y, x);
 		switch(ch)
 		{
 			// BACKSPACE
 			case 127: {
-				int y, x;
-				getyx(stdscr,y,x);
 				mvdelch(y,x-1);
+				if (x == 0) {
+					move(y-1,x);
+				}
 				print_debug("BACKSPACE");
 				// TODO(gmicros): handle deleting a line
 				break;
