@@ -14,6 +14,11 @@ void print_debug(char* msg){
 }
 
 int main() {
+	// state of the editor
+	int num_lines = 0;
+	int line_length[100] = {};
+		
+
 	int ch;
 	initscr();		// Start curses mode
 	raw();			// line buffering disabled
@@ -54,8 +59,9 @@ int main() {
 			// BACKSPACE
 			case 127: {
 				mvdelch(y,x-1);
+				line_length[y]--;
 				if (x == 0) {
-					move(y-1,x);
+					move(y-1,line_length[y-1]);
 				}
 				print_debug("BACKSPACE");
 				// TODO(gmicros): handle deleting a line
@@ -65,6 +71,7 @@ int main() {
 			case 10:
 				printw("\n");
 				print_debug("ENTER");
+				num_lines++;
 				break;
 			// REGULAR CHARACTER
 			default:
@@ -72,6 +79,8 @@ int main() {
 				char str[30];
 				sprintf(str, "input: %c\n", ch);
 				print_debug(str);
+				line_length[y]++;
+				
 	
 		}
 
