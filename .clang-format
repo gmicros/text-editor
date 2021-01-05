@@ -1,0 +1,7 @@
+BasedOnStyle: Google
+AllowShortFunctionsOnASingleLine: Inline
+AllowShortIfStatementsOnASingleLine: false
+AllowShortLoopsOnASingleLine: false
+Standard: Cpp11
+ColumnLimit: 99
+IncludeBlocks: Preserve
