@@ -16,11 +16,10 @@ int main() {
 	noecho();		// dont echo while we getch
 	
 	// debug output window
-	int startx, starty, height, width;
-	height = 3;
-	width = 10;
-	starty = LINES-height;
-	startx = COLS - width;
+	int const height = 3;
+	int const width = 10;
+	int const starty = LINES-height;
+	int const startx = COLS - width;
 	DebugWindow debug_win(height, width, starty, startx);
 
 	debug_win.Debug("WELCOME");	
