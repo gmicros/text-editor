@@ -2,24 +2,14 @@
 // inserting and deleting text.
 //
 
-#include <ncurses.h>
-
-WINDOW *debug_win;
-
-void print_debug(char* msg){
-	werase(debug_win);
-	wprintw(debug_win, "%s", msg);
-	wrefresh(debug_win);
-	
-}
+#include "debug_window.h"
 
 int main() {
 	// state of the editor
 	int num_lines = 0;
 	int line_length[100] = {};
 		
-
-	int ch;
+	// setup ncurses
 	initscr();		// Start curses mode
 	raw();			// line buffering disabled
 	keypad(stdscr, TRUE);	// get arrows and F-keys
@@ -31,13 +21,11 @@ int main() {
 	width = 10;
 	starty = LINES-height;
 	startx = COLS - width;
-	debug_win = newwin(height, width, starty, startx);
-	box(debug_win, 0, 0);
-	wrefresh(debug_win);
-	refresh();	
+	DebugWindow debug_win(height, width, starty, startx);
 
-	print_debug("WELCOME");	
+	debug_win.Debug("WELCOME");	
 
+	int ch;
 	// quit the TE with the Esc key	
 	while ((ch = getch()) != 27) {
 		int y, x;
@@ -63,14 +51,14 @@ int main() {
 				if (x == 0) {
 					move(y-1,line_length[y-1]);
 				}
-				print_debug("BACKSPACE");
+				debug_win.Debug("BACKSPACE");
 				// TODO(gmicros): handle deleting a line
 				break;
 			}
 			// ENTER
 			case 10:
 				printw("\n");
-				print_debug("ENTER");
+				debug_win.Debug("ENTER");
 				num_lines++;
 				break;
 			// REGULAR CHARACTER
@@ -78,7 +66,7 @@ int main() {
 				printw("%c", ch);
 				char str[30];
 				sprintf(str, "input: %c\n", ch);
-				print_debug(str);
+				debug_win.Debug(str);
 				line_length[y]++;
 				
 	
@@ -87,7 +75,7 @@ int main() {
 		// update display and get next char
 		refresh();
 	}
-	print_debug("EXITING");	
+	debug_win.Debug("EXITING");	
 	endwin();
 	
 	return 0;
