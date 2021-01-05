@@ -2,13 +2,17 @@
 // inserting and deleting text.
 //
 
+#include <fstream>
+#include <streambuf>
+
 #include "debug_window.h"
 
-int main() {
+int main(int argc, char* argv[]) {
 	// state of the editor
+	bool load_file  = false;
 	int num_lines = 0;
 	int line_length[100] = {};
-		
+
 	// setup ncurses
 	initscr();		// Start curses mode
 	raw();			// line buffering disabled
@@ -23,6 +27,16 @@ int main() {
 	DebugWindow debug_win(height, width, starty, startx);
 
 	debug_win.Debug("WELCOME");	
+		
+	// load input file
+	if (argc == 2) {
+		load_file = true;
+		std::string filename = argv[1];
+		std::ifstream in_file(filename);
+		std::string in_str((std::istreambuf_iterator<char>(in_file)),
+							std::istreambuf_iterator<char>());
+		addstr(in_str.c_str());
+	}
 
 	int ch;
 	// quit the TE with the Esc key	
@@ -74,6 +88,9 @@ int main() {
 		// update display and get next char
 		refresh();
 	}
+	if (load_file) {
+		// TODO(gmicros): write changes to the file
+	}	
 	debug_win.Debug("EXITING");	
 	endwin();
 	
