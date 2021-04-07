@@ -57,6 +57,7 @@ int main(int argc, char* argv[]) {
         move(y + 1, x);
         break;
       // BACKSPACE
+      case KEY_BACKSPACE:
       case 127: {
         mvdelch(y, x - 1);
         line_length[y]--;
